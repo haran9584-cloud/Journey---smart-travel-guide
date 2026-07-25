@@ -76,7 +76,7 @@ const promptMessage =  `
 
 //Sending the promt to the google GRMINI using Google SDK.  
 const response = await ai.models.generateContent({   
-    model: 'gemini-2.5-flash',   
+    model: 'gemini-3.5-flash',   
     contents: promptMessage, 
     }); 
                  
