@@ -7,7 +7,7 @@ export default function Home() {
   const [from, SetFrom] = useState('');
   const [destination, setDestination] = useState('');
   const [days, setDays] = useState('3');
-  const [budget, setBudget] = useState('mid-range');
+  const [budget, setBudget] = useState('mid-range'); 
   
   //States from server response and loading state
 
@@ -76,7 +76,7 @@ return (
 
 <form onSubmit={handleGenerate}>
 
-<div>
+<div> 
   <label style={{display: 'block', fontWeight: 'bold'}}>where are you from</label>
   <input
   type="text"
@@ -101,7 +101,7 @@ return (
 <div style={{marginTop: '20px'}}>
   <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '5px' }}>Number of Days</label>
 <input
-  type="numnber"
+  type="number"
   min="3"
   max="14"
   style={{ width: '100%', padding: '10px', marginTop: '5px', fontSize: '16px' }}

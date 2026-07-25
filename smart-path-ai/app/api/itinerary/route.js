@@ -13,7 +13,7 @@ const geoRes = await fetch (
 const geoData = await geoRes.json(); 
 
 if (!geoData.results || geoData.results.length === 0) {
-throw new error(`could not found this location ${destination}`) 
+throw new Error(`could not found this location ${destination}`) 
 } 
 
 const {latitude, longitude, name, country} = geoData.results[0];  
