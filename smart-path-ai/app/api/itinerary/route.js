@@ -69,14 +69,14 @@ const promptMessage =  `
       Use this real weather data to tailor your suggestions — recommend indoor activities on days with high rain chance, and outdoor/beach activities on clear days.
 
       Break your response down day-by-day. For each day, suggest specific landmarks, great local dishes to try, and practical transport or scheduling tips.
-      For each day, also include an estimated cost breakdown in local currency and approximate USD — covering accommodation, food, activities, and local transport — clearly labeled as "Estimated Daily Cost."
+      For each day, also include an estimated cost breakdown in local currency and approximate indian rupess — covering accommodation, food, activities, and local transport — clearly labeled as "Estimated Daily Cost."
       At the very end, provide a "Total Estimated Trip Cost" summing up all days.
       Keep formatting scannable and organized, using clear headings for each day.
     `;
 
 //Sending the promt to the google GRMINI using Google SDK.  
 const response = await ai.models.generateContent({   
-    model: 'gemini-flash-latest',   
+    model: 'gemini-2.5-flash',   
     contents: promptMessage, 
     }); 
                  
