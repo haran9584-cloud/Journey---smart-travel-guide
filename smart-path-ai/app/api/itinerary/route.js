@@ -1,7 +1,7 @@
  import { NextResponse } from 'next/server';
  import { GoogleGenAI } from '@google/genai';
 
- const ai = new GoogleGenAI ({apiKey: process.env.GEMINI_API_KEY});
+ const ai = new GoogleGenAI();
 
 //Sending request to get the latitude and longitude of the destination.
  async function getCoordinates(destination) {
@@ -76,7 +76,7 @@ const promptMessage =  `
 
 //Sending the promt to the google GRMINI using Google SDK.  
 const response = await ai.models.generateContent({   
-    model: 'Gemini 3.1 Flash-Lite',   
+    model: 'gemini-3.1-flash-lite',   
     contents: promptMessage, 
     }); 
                  
