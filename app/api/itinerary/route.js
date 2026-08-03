@@ -3,7 +3,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
 export async function POST(request) {
   try {
@@ -23,7 +23,7 @@ export async function POST(request) {
     const weatherData = await weatherRes.json();
 
     // 3. Generate Itinerary
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
     
     const prompt = `You are a world-class travel planner and local expert. 
     Create a highly engaging, realistic ${days}-day itinerary for a trip from ${origin} to ${destination}.
