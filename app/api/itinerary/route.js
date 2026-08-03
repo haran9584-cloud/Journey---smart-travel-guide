@@ -3,8 +3,6 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-
 export async function POST(request) {
   try {
     const { destination, days, budget, origin } = await request.json();
@@ -22,33 +20,49 @@ export async function POST(request) {
     const weatherRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${loc.latitude}&longitude=${loc.longitude}&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=auto&forecast_days=${days}`);
     const weatherData = await weatherRes.json();
 
-    // 3. Generate Itinerary
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-    
-    const prompt = `You are a world-class travel planner and local expert. 
-    Create a highly engaging, realistic ${days}-day itinerary for a trip from ${origin} to ${destination}.
+        // 3. TEMPORARY MOCK DATA (Bypassing Gemini Error)
 
-    CRITICAL CONSTRAINTS:
-    1. Budget: ${budget}. Strictly tailor all restaurant, transport, and activity recommendations to fit this specific budget level.
-    2. Weather: The local forecast during this trip is ${JSON.stringify(weatherData.daily)}. You MUST adapt the activities based on this weather (e.g., prioritize indoor activities/museums if temperatures are extreme or raining; maximize outdoor time on mild, sunny days).
+    const mockPlan = `## Trip Overview: ${origin} ✈️ ${destination}
+**Duration:** ${days} Days | **Budget:** ${budget.toUpperCase()}
 
-    FORMATTING REQUIREMENTS:
-    - Use clean Markdown format.
-    - Start each day with a descriptive header (e.g., "## Day 1: Exploring the Historic Heart").
-    - Break each day into **Morning**, **Afternoon**, and **Evening** using bold text and bullet points (*).
-    - Provide specific, actionable recommendations (name actual places, neighborhoods, or local dishes to try).
-    - Include one short "**💡 Local Pro-Tip:**" at the end of each day.
-    
-    Keep the tone exciting, inspiring, and concise without unnecessary fluff. Do not wrap the response in a markdown code block.`;
+---
 
-    const result = await model.generateContent(prompt);
+## Day 1: Arrival & Exploration
+**Morning**
+* Depart from **${origin}** and arrive in beautiful **${destination}**.
+* Check into your ${budget}-friendly accommodation in the city center.
+* Grab a quick coffee and pastry at a highly-rated local cafe.
+
+**Afternoon**
+* Take a guided walking tour of the main historical district to get your bearings.
+* Visit the most iconic landmark in ${destination}.
+
+**Evening**
+* Enjoy a welcome dinner featuring local cuisine (perfect for a ${budget} budget).
+* Take a leisurely evening stroll to soak in the atmosphere.
+
+## Day 2: Deep Dive into Culture
+**Morning**
+* Breakfast at the hotel or a nearby bakery.
+* Visit the premier museum or art gallery in the city.
+
+**Afternoon**
+* Enjoy a street food lunch or casual dining experience.
+* Explore a vibrant local market and pick up some souvenirs to take back to **${origin}**.
+
+**Evening**
+* Try a different culinary neighborhood for dinner.
+* Experience the local nightlife or attend a cultural performance.
+
+**💡 Local Pro-Tip:** The weather in ${destination} can be unpredictable, so keep an eye on the forecast above and pack layers! Safe travels back to ${origin} at the end of your trip!`;
     
     return NextResponse.json({
       success: true,
-      plan: result.response.text(),
+      plan: mockPlan,
       location: loc,
       weather: weatherData.daily
     });
+    
   } catch (error) {
     console.error("API Error:", error);
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });
